@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: waveguard-ai
+    runtime: node
+    repo: https://github.com/DWIND-source/waveguard-ai
+    branch: main
+    region: oregon
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/status
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        sync: false

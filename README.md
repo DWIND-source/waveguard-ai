@@ -1,5 +1,11 @@
 # WaveGuard AI — The City That Thinks Ahead
 
+**Online demo:** https://waveguard-ai-dwind.gagaming171106.chatgpt.site
+
+The public demo supports CTM simulation, manual incident parameters, and session reports. Gemini is disabled on this host because Google returned `User location is not supported for the API use.` The same Gemini integration passed real API tests locally. No AI output is fabricated when the service is unavailable.
+
+For a Node/Express deployment, `render.yaml` prepares a free Render service in Oregon. Connect your Render account to this repository, create a Blueprint, and enter `GEMINI_API_KEY` as a secret environment variable. This alternative deployment has not yet been provisioned or verified. Keep all keys on the server; never put them in `VITE_*` variables.
+
 **Tác giả / Author: [DWIND-source](https://github.com/DWIND-source).**
 
 Nguyên mẫu nghiên cứu và demo DevFest do DWIND-source phát triển. Đây là mô phỏng CTM, không phải ứng dụng nhận diện camera hoặc hệ thống điều khiển đèn thực tế.
