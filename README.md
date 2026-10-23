@@ -1,8 +1,8 @@
 # WaveGuard AI — The City That Thinks Ahead
 
-**Online demo:** https://waveguard-ai-dwind.gagaming171106.chatgpt.site
+**Online demo:** https://dwind-source.github.io/waveguard-ai/
 
-The public demo supports CTM simulation, manual incident parameters, and session reports. Gemini is disabled on this host because Google returned `User location is not supported for the API use.` The same Gemini integration passed real API tests locally. No AI output is fabricated when the service is unavailable.
+The GitHub Pages demo supports CTM simulation, manual incident parameters, and session reports. Pages serves the browser application only; Gemini requires the separate Node/Express backend and is disabled in this static build. The same Gemini integration passed real API tests locally. No AI output is fabricated when the service is unavailable. GitHub Actions builds and deploys the demo on each push to main without API secrets.
 
 For a Node/Express deployment, `render.yaml` prepares a free Render service in Oregon. Connect your Render account to this repository, create a Blueprint, and enter `GEMINI_API_KEY` as a secret environment variable. This alternative deployment has not yet been provisioned or verified. Keep all keys on the server; never put them in `VITE_*` variables.
 

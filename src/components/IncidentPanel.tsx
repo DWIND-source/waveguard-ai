@@ -28,14 +28,14 @@ export function IncidentPanel({ status, text, onText, onAnalyze, onPreset, onDem
         </label>
         <span
           className={`chip px-3 py-1 text-xs flex items-center gap-1.5 ${gem ? 'text-violet-200 border-violet-400/40 bg-violet-500/10' : 'text-slate-300 bg-slate-500/10'}`}
-          title={gem ? t(`Gemini qua máy chủ (${status?.model})`, `Gemini via server (${status?.model})`) : t('Chưa có GEMINI_API_KEY — dùng điều khiển thủ công', 'No GEMINI_API_KEY — manual controls')}
+          title={gem ? t(`Gemini qua máy chủ (${status?.model})`, `Gemini via server (${status?.model})`) : t('Gemini không khả dụng — dùng điều khiển thủ công', 'Gemini unavailable — manual controls')}
         >
           <Bot size={14} />
           {status === null
             ? t('Đang kiểm tra Gemini…', 'Checking Gemini…')
             : gem
               ? t(`Gemini đã cấu hình · ${status.model}`, `Gemini configured · ${status.model}`)
-              : t('Gemini chưa cấu hình — chế độ thủ công', 'Gemini not configured — manual mode')}
+              : t('Gemini không khả dụng — chế độ thủ công', 'Gemini unavailable — manual mode')}
         </span>
       </div>
       <textarea
@@ -81,8 +81,8 @@ export function IncidentPanel({ status, text, onText, onAnalyze, onPreset, onDem
         <p className="mt-3 text-sm text-slate-400 flex items-start gap-2">
           <AlertTriangle size={16} className="text-wg-orange shrink-0 mt-0.5" />
           {t(
-            'Phân tích sự cố bằng AI đang tắt (máy chủ chưa có GEMINI_API_KEY). “Phân tích & Điều phối” sẽ mở bảng tham số thủ công; kịch bản mẫu dùng tham số có cấu trúc, không phải kết quả của Gemini.',
-            'AI incident analysis is off (no GEMINI_API_KEY on the server). “Analyse & Coordinate” opens the manual parameter form; examples use structured parameters, not Gemini output.',
+            'Phân tích sự cố bằng AI đang tắt (cần backend Gemini). “Phân tích & Điều phối” sẽ mở bảng tham số thủ công; kịch bản mẫu dùng tham số có cấu trúc, không phải kết quả của Gemini.',
+            'AI incident analysis is off (Gemini backend required). “Analyse & Coordinate” opens the manual parameter form; examples use structured parameters, not Gemini output.',
           )}
         </p>
       )}

@@ -214,7 +214,7 @@ export function NodeInspector({ node, run, frame, geminiReady, onClose }: Props)
           </button>
           {!geminiReady && (
             <p className="text-xs text-slate-400 mt-2">
-              {t('Gemini chưa được cấu hình trên máy chủ — bản ghi quyết định ở trên là giải thích gốc, đầy đủ.', 'Gemini is not configured on the server — the decision record above is the complete, original explanation.')}
+              {t('Gemini không khả dụng trong bản triển khai này — bản ghi quyết định ở trên là giải thích gốc, đầy đủ.', 'Gemini is unavailable in this deployment — the decision record above is the complete, original explanation.')}
             </p>
           )}
           {err && <p className="text-sm text-red-300 mt-2">{err}</p>}

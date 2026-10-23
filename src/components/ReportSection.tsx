@@ -128,7 +128,7 @@ function ReportSectionImpl({ runs, incidentText, confirmed, confirmedSummary, as
           <button
             onClick={askGemini}
             disabled={!geminiReady || loading}
-            title={geminiReady ? '' : t('Máy chủ chưa có GEMINI_API_KEY', 'No GEMINI_API_KEY on the server')}
+            title={geminiReady ? '' : t('Cần backend Gemini', 'Gemini unavailable on the server')}
             className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 bg-violet-500/20 border border-violet-400/40 text-violet-100 hover:bg-violet-500/30 disabled:opacity-40"
           >
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Bot size={16} />} {t('Giải thích bằng Gemini', 'Explain with Gemini')}
@@ -159,8 +159,8 @@ function ReportSectionImpl({ runs, incidentText, confirmed, confirmedSummary, as
       {!geminiReady && (
         <p className="mt-2 text-xs text-slate-400">
           {t(
-            'Gemini chưa được cấu hình trên máy chủ (GEMINI_API_KEY) nên nút giải thích bằng AI bị tắt. Báo cáo bên dưới hoàn toàn được tính từ mô phỏng.',
-            'Gemini is not configured on the server (GEMINI_API_KEY), so the AI explanation button is disabled. The report below is computed entirely from the simulation.',
+            'Gemini không khả dụng trong bản triển khai này nên nút giải thích bằng AI bị tắt. Báo cáo bên dưới hoàn toàn được tính từ mô phỏng.',
+            'Gemini is unavailable in this deployment, so the AI explanation button is disabled. The report below is computed entirely from the simulation.',
           )}
         </p>
       )}

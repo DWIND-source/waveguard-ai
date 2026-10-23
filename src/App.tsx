@@ -153,7 +153,7 @@ export default function App() {
       // Gemini unavailable: clearly labelled manual controls, never a fake AI response
       setDraft({ ...PRESETS[0].draft, summary: text.trim() || PRESETS[0].draft.summary, source: 'manual', assumptions: ['capacityReduction', 'durationSeconds'] });
       setParseMeta({ model: null, removed: [], missing: [] });
-      setError(status ? t('Gemini chưa được cấu hình trên máy chủ nên không thể tự động phân tích mô tả. Vui lòng chọn tham số thủ công bên dưới.', 'Gemini is not configured on the server, so the description cannot be analysed automatically. Please choose the parameters manually below.') : null);
+      setError(status ? t('Gemini không khả dụng trong bản triển khai này nên không thể tự động phân tích mô tả. Vui lòng chọn tham số thủ công bên dưới.', 'Gemini is unavailable in this deployment, so the description cannot be analysed automatically. Please choose the parameters manually below.') : null);
       return;
     }
     setAnalyzing(true);
@@ -326,7 +326,7 @@ export default function App() {
                 ? null
                 : status.gemini
                 ? t('Phân tích sự cố bằng Gemini không được dùng cho demo này; hãy nhập mô tả của bạn ở trên để thử.', 'Gemini incident analysis is not used for this demo; type your own description above to try it.')
-                : t('Phân tích sự cố bằng AI đang tắt (chưa có GEMINI_API_KEY).', 'AI incident analysis is off (no GEMINI_API_KEY).')}
+                : t('Phân tích sự cố bằng AI đang tắt (cần backend Gemini).', 'AI incident analysis is off (Gemini backend required).')}
             </p>
           )}
           {frame && wgRun && fxRun && scenario ? (
