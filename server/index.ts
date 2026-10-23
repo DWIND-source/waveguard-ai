@@ -2,6 +2,7 @@ import express from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { apiAccess } from './access';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -17,6 +18,8 @@ if (fs.existsSync(envFile)) {
 const { explain, geminiAvailable, GEMINI_MODEL, parseIncident } = await import('./gemini');
 
 const app = express();
+if (process.env.TRUST_PROXY === '1') app.set('trust proxy', 1);
+app.use('/api', apiAccess((process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean)));
 app.use(express.json({ limit: '2mb' }));
 
 app.get('/api/status', (_req, res) => {
@@ -67,6 +70,6 @@ if (process.env.NODE_ENV === 'production' || process.argv.includes('--production
   const vite = await createServer({ root, server: { middlewareMode: true, hmr: { port: port + 1 } }, appType: 'spa' });
   app.use(vite.middlewares);
 }
-app.listen(port, () => {
+app.listen(port, process.env.HOST || '0.0.0.0', () => {
   console.log(`WaveGuard AI → http://localhost:${port}  (Gemini: ${geminiAvailable() ? GEMINI_MODEL : 'chưa cấu hình — chế độ thủ công'})`);
 });

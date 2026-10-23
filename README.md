@@ -2,7 +2,9 @@
 
 **Online demo:** https://dwind-source.github.io/waveguard-ai/
 
-The GitHub Pages demo supports CTM simulation, manual incident parameters, and session reports. Pages serves the browser application only; Gemini requires the separate Node/Express backend and is disabled in this static build. The same Gemini integration passed real API tests locally. No AI output is fabricated when the service is unavailable. GitHub Actions builds and deploys the demo on each push to main without API secrets.
+The GitHub Pages demo supports CTM simulation, manual incident parameters, and session reports. Pages serves the browser application only; Gemini requires the separate Node/Express backend. Without a configured backend URL, Gemini is disabled. The same Gemini integration passed real API tests locally. No AI output is fabricated when the service is unavailable. GitHub Actions builds and deploys the demo on each push to main without API secrets.
+
+To connect a deployed backend, set the GitHub repository Actions variable `WAVEGUARD_API_URL` to its HTTPS origin and rerun the **Deploy GitHub Pages** workflow. The frontend uses this public URL for status, incident parsing, and explanations. Keep `GEMINI_API_KEY` only in the backend environment. Set backend `ALLOWED_ORIGINS=https://dwind-source.github.io`; `TRUST_PROXY=1` is appropriate only behind one trusted reverse proxy. API requests are limited to 12 per client per minute and 60 total per minute, in memory per server process. CORS restricts browser origins but is not authentication. A temporary tunnel requires the local server and tunnel to remain running; after its URL changes, update the repository variable and redeploy.
 
 For a Node/Express deployment, `render.yaml` prepares a free Render service in Oregon. Connect your Render account to this repository, create a Blueprint, and enter `GEMINI_API_KEY` as a secret environment variable. This alternative deployment has not yet been provisioned or verified. Keep all keys on the server; never put them in `VITE_*` variables.
 

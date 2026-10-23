@@ -1,5 +1,8 @@
 import type { ParsedIncident } from '../shared/incident';
 
+const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+const offlineDemo = import.meta.env.VITE_STATIC_DEMO === 'true' && !apiBase;
+
 export interface ApiStatus {
   gemini: boolean;
   model: string | null;
@@ -25,12 +28,12 @@ export class ApiError extends Error {
 
 async function post<T>(url: string, body: unknown): Promise<T> {
   const en = (body as { lang?: string })?.lang === 'en';
-  if (import.meta.env.VITE_STATIC_DEMO === 'true') {
+  if (offlineDemo) {
     throw new ApiError('gemini_unavailable', en ? 'Gemini requires a separate backend. Use manual parameters in this demo.' : 'Gemini cần backend riêng. Hãy dùng tham số thủ công trong bản demo này.');
   }
   let res: Response;
   try {
-    res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    res = await fetch(apiBase + url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(90000) });
   } catch {
     throw new ApiError('network', en ? 'Cannot connect to the WaveGuard server.' : 'Không kết nối được tới máy chủ WaveGuard.');
   }
@@ -38,6 +41,7 @@ async function post<T>(url: string, body: unknown): Promise<T> {
   if (!res.ok) {
     const messages: Record<string, [string, string]> = {
       empty_text: ['Vui lòng mô tả sự cố.', 'Please describe the incident.'],
+      rate_limit: ['Đã đạt giới hạn gọi API. Vui lòng chờ một phút rồi thử lại.', 'API request limit reached. Wait one minute and retry.'],
       gemini_unavailable: ['Gemini không khả dụng trong bản triển khai này.', 'Gemini is unavailable in this deployment.'],
       invalid_output: ['Không có sự cố hợp lệ được hỗ trợ. Vui lòng diễn đạt lại hoặc nhập thủ công.', 'No valid supported incident was returned. Rephrase or enter parameters manually.'],
       gemini_error: ['Dịch vụ Gemini không trả lời thành công. Có thể thử lại hoặc nhập thủ công.', 'Gemini did not respond successfully. Retry or enter parameters manually.'],
@@ -48,9 +52,9 @@ async function post<T>(url: string, body: unknown): Promise<T> {
 }
 
 export async function getStatus(): Promise<ApiStatus> {
-  if (import.meta.env.VITE_STATIC_DEMO === 'true') return { gemini: false, model: null };
+  if (offlineDemo) return { gemini: false, model: null };
   try {
-    const r = await fetch('/api/status');
+    const r = await fetch(apiBase + '/api/status', { signal: AbortSignal.timeout(10000), cache: 'no-store' });
     if (!r.ok) return { gemini: false, model: null };
     return await r.json();
   } catch {

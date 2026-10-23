@@ -14,5 +14,9 @@ services:
         value: "24"
       - key: NODE_ENV
         value: production
+      - key: ALLOWED_ORIGINS
+        value: https://dwind-source.github.io
+      - key: TRUST_PROXY
+        value: "1"
       - key: GEMINI_API_KEY
         sync: false
