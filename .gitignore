@@ -1,0 +1,10 @@
+node_modules
+dist
+.env
+.env.*
+!.env.example
+artifacts/live-api-audit.json
+coverage/
+.DS_Store
+Thumbs.db
+*.log

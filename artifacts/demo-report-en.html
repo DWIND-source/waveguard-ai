@@ -1,0 +1,90 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>WaveGuard AI — Session report</title><style>
+body{font:15px/1.6 system-ui,sans-serif;color:#14212a;max-width:1000px;margin:40px auto;padding:0 20px}h1{letter-spacing:-.04em}h2{border-top:1px solid #bdcbd1;padding-top:20px;margin-top:32px}table{border-collapse:collapse;width:100%;font-size:12px}td,th{padding:8px;border:1px solid #cbd5e1;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f5f9;padding:16px}.notice{border-left:3px solid #0891b2;padding:12px} @media print{button{display:none}thead{display:table-header-group}}</style></head><body>
+<h1>WaveGuard AI / Session report</h1><p>Generated 2026-10-23T12:47:53.832Z · seed 2026 · demand checksum 1afcf58e</p><p class="notice">These are simulation results, not real-world traffic trial data.</p>
+<h2>1. Incident and confirmed assumptions</h2><p>A truck broke down on the stretch between nodes B and C. Traffic is heavy and the queue may back up to node A.</p><p>Road blockage — node C, link B-C, capacity −70%, from t=120s for 15 min</p><ul><li>Test assumption: capacity reduced by 70%.</li><li>Test assumption: incident lasts 15 min.</li></ul>
+<h2>2. Measured simulation outcomes</h2><p>Every controller uses identical arrivals, incidents, initial conditions, seed and duration. Percent change is WaveGuard relative to Fixed-Time; negative values are not automatically better.</p><table><thead><tr><th>Measurement</th><th>Fixed-Time</th><th>Max-Pressure</th><th>WaveGuard</th><th>Change</th></tr></thead><tbody><tr><th>Vehicles served (veh)</th><td>1037</td><td>1029</td><td>1092</td><td>5.3%</td></tr><tr><th>Total waiting time (veh·h)</th><td>43.0</td><td>43.2</td><td>32.8</td><td>-23.9%</td></tr><tr><th>Average queue (veh)</th><td>103.3</td><td>103.6</td><td>78.7</td><td>-23.9%</td></tr><tr><th>Peak link occupancy (%)</th><td>88</td><td>85</td><td>80</td><td>-8.7%</td></tr><tr><th>Spillback duration (s)</th><td>616</td><td>201</td><td>336</td><td>-45.5%</td></tr><tr><th>Vehicles still waiting at entry (end) (veh)</th><td>24</td><td>33</td><td>0</td><td>-100.0%</td></tr><tr><th>Side-street waiting time (veh·h)</th><td>3.2</td><td>4.1</td><td>1.9</td><td>-40.5%</td></tr></tbody></table>
+<p>Measured mean WaveGuard decision time: 0.007 ms. This timing varies with the host computer.</p>
+<h2>3. Engine event timeline</h2><ul><li><b>120s</b> — Incident on B-C: capacity down 70%</li><li><b>161s</b> — Node C warns node B: risk 0.30 on B-C</li><li><b>286s</b> — Node B warns node A: risk 0.30 on A-B</li><li><b>294s</b> — Node B starts metering flow into B-C</li><li><b>476s</b> — Queue on B-C reached the upstream intersection (spillback)</li><li><b>600s</b> — Node A starts metering flow into A-B</li><li><b>804s</b> — Queue on A-B reached the upstream intersection (spillback)</li><li><b>976s</b> — Link in-A above 80% capacity</li><li><b>1020s</b> — Incident on B-C cleared</li></ul><h2>4. Decision evidence (first 25 non-maintain records)</h2><table><tr><th>Time (s)</th><th>Node</th><th>Action</th><th>Reason</th></tr><tr><td>0</td><td>C</td><td>SWITCH</td><td>Switch to phase SIDE: score 4.4 &gt; 3.5 (main queue 3.5, side street 1.5 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>7</td><td>B</td><td>SWITCH</td><td>Switch to phase MAIN: score 7.8 &gt; 0.4 (main queue 6.0, side street 0.4 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>14</td><td>C</td><td>SWITCH</td><td>Switch to phase MAIN: score 9.2 &gt; 0.0 (main queue 6.3, side street 0.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>18</td><td>A</td><td>SWITCH</td><td>Switch to phase SIDE: score 3.3 &gt; 2.0 (main queue 2.0, side street 2.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>32</td><td>A</td><td>SWITCH</td><td>Switch to phase MAIN: score 9.6 &gt; 0.0 (main queue 10.5, side street 0.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>39</td><td>B</td><td>SWITCH</td><td>Switch to phase SIDE: score 3.5 &gt; 2.3 (main queue 2.3, side street 1.6 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>53</td><td>B</td><td>SWITCH</td><td>Switch to phase MAIN: score 4.9 &gt; 0.0 (main queue 3.5, side street 0.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>54</td><td>C</td><td>SWITCH</td><td>Switch to phase SIDE: score 3.8 &gt; 2.1 (main queue 2.1, side street 1.5 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>62</td><td>A</td><td>SWITCH</td><td>Switch to phase SIDE: score 4.2 &gt; 3.0 (main queue 3.0, side street 2.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>68</td><td>C</td><td>SWITCH</td><td>Switch to phase MAIN: score 1.8 &gt; 1.0 (main queue 1.5, side street 1.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>76</td><td>A</td><td>SWITCH</td><td>Switch to phase MAIN: score 9.6 &gt; 0.0 (main queue 10.5, side street 0.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>86</td><td>B</td><td>SWITCH</td><td>Switch to phase SIDE: score 2.0 &gt; 1.4 (main queue 1.4, side street 1.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>95</td><td>A</td><td>SWITCH</td><td>Switch to phase SIDE: score 3.1 &gt; 2.5 (main queue 2.5, side street 2.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>98</td><td>C</td><td>SWITCH</td><td>Switch to phase SIDE: score 7.1 &gt; 6.9 (main queue 6.9, side street 5.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>100</td><td>B</td><td>SWITCH</td><td>Switch to phase MAIN: score 7.3 &gt; 0.0 (main queue 5.0, side street 0.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>109</td><td>A</td><td>SWITCH</td><td>Switch to phase MAIN: score 8.2 &gt; 2.0 (main queue 5.6, side street 2.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>112</td><td>C</td><td>SWITCH</td><td>Switch to phase MAIN: score 8.5 &gt; 3.0 (main queue 5.8, side street 3.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>118</td><td>B</td><td>SWITCH</td><td>Switch to phase SIDE: score 4.8 &gt; 1.7 (main queue 1.7, side street 3.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>132</td><td>B</td><td>SWITCH</td><td>Switch to phase MAIN: score 6.3 &gt; 1.0 (main queue 4.4, side street 1.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>145</td><td>C</td><td>SWITCH</td><td>Switch to phase SIDE: score 6.7 &gt; 6.3 (main queue 6.3, side street 2.9 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>148</td><td>A</td><td>SWITCH</td><td>Switch to phase SIDE: score 5.1 &gt; 4.0 (main queue 4.0, side street 2.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>159</td><td>C</td><td>SWITCH</td><td>Switch to phase MAIN: score 9.6 &gt; 0.0 (main queue 15.3, side street 0.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>162</td><td>A</td><td>SWITCH</td><td>Switch to phase MAIN: score 9.6 &gt; 0.0 (main queue 7.8, side street 0.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr><tr><td>166</td><td>B</td><td>SWITCH</td><td>Switch to phase SIDE: score 7.1 &gt; 6.7 (main queue 6.7, side street 3.0 veh; downstream risk ρ=0.40 (local 0.40, pheromone τ=0.25)).</td></tr><tr><td>180</td><td>A</td><td>SWITCH</td><td>Switch to phase SIDE: score 3.0 &gt; 1.0 (main queue 1.0, side street 2.0 veh; downstream risk ρ=0.00 (local 0.00, pheromone τ=0.00)).</td></tr></table>
+<h2>5. Reproducibility / exact configuration</h2><pre>{
+  &quot;scenario&quot;: {
+    &quot;durationS&quot;: 1500,
+    &quot;seed&quot;: 2026,
+    &quot;demand&quot;: {
+      &quot;main&quot;: 0.55,
+      &quot;side&quot;: {
+        &quot;A&quot;: 0.07,
+        &quot;B&quot;: 0.08,
+        &quot;C&quot;: 0.07
+      }
+    },
+    &quot;demandProfile&quot;: [
+      {
+        &quot;t&quot;: 0,
+        &quot;factor&quot;: 1
+      }
+    ],
+    &quot;incidents&quot;: [
+      {
+        &quot;id&quot;: &quot;inc-1&quot;,
+        &quot;type&quot;: &quot;road_blockage&quot;,
+        &quot;linkId&quot;: &quot;B-C&quot;,
+        &quot;positionFrac&quot;: 0.85,
+        &quot;capacityReduction&quot;: 0.7,
+        &quot;demandIncrease&quot;: 0,
+        &quot;startS&quot;: 120,
+        &quot;durationS&quot;: 900,
+        &quot;description&quot;: &quot;Truck broken down on B-C near node C, risk of queue backing up to A.&quot;
+      }
+    ],
+    &quot;sensorFaults&quot;: [],
+    &quot;id&quot;: &quot;custom&quot;,
+    &quot;name&quot;: &quot;Truck broken down on B-C near node C, risk of queue backing up to A.&quot;,
+    &quot;description&quot;: &quot;Truck broken down on B-C near node C, risk of queue backing up to A.&quot;
+  },
+  &quot;config&quot;: {
+    &quot;network&quot;: {
+      &quot;dt&quot;: 1,
+      &quot;freeFlowSpeed&quot;: 13.9,
+      &quot;satFlowPerLane&quot;: 0.5,
+      &quot;jamDensityPerLane&quot;: 0.14285714285714285,
+      &quot;turnOffFraction&quot;: 0.08,
+      &quot;yellowDischarge&quot;: 0.5
+    },
+    &quot;timing&quot;: {
+      &quot;minGreenMain&quot;: 12,
+      &quot;minGreenSide&quot;: 8,
+      &quot;maxGreenMain&quot;: 75,
+      &quot;maxGreenSide&quot;: 45,
+      &quot;yellow&quot;: 3,
+      &quot;allRed&quot;: 2,
+      &quot;maxSideRed&quot;: 80
+    },
+    &quot;fixedPlan&quot;: {
+      &quot;mainGreen&quot;: 60,
+      &quot;sideGreen&quot;: 20,
+      &quot;offsets&quot;: {
+        &quot;A&quot;: 0,
+        &quot;B&quot;: 24,
+        &quot;C&quot;: 44
+      }
+    },
+    &quot;waveguard&quot;: {
+      &quot;horizonS&quot;: 120,
+      &quot;emaAlpha&quot;: 0.08,
+      &quot;evaporation&quot;: 0.04,
+      &quot;depositGain&quot;: 0.5,
+      &quot;tauMax&quot;: 1,
+      &quot;relayAttenuation&quot;: 0.6,
+      &quot;emitThreshold&quot;: 0.3,
+      &quot;messageTtlS&quot;: 30,
+      &quot;refreshS&quot;: 10,
+      &quot;riskDiscount&quot;: 0.6,
+      &quot;decisionHorizonS&quot;: 10,
+      &quot;fairnessWeight&quot;: 1.5,
+      &quot;fallbackConfidence&quot;: 0.5
+    }
+  },
+  &quot;demandChecksum&quot;: &quot;1afcf58e&quot;
+}</pre>
+<h2>6. Gemini explanation</h2><p>No Gemini explanation generated for this session.</p>
+<h2>7. Limitations</h2><ul><li>Macroscopic CTM model (continuous flow) on 3 intersections, not a per-vehicle microsimulation; the vehicles shown are schematic.</li><li>Traffic demand is a synthetic seeded Poisson series, not measured data from Hanoi.</li><li>Intersection blocking, dedicated turn lanes, mixed motorbike traffic and pedestrians are not modelled.</li><li>Stigmergy-style risk propagation is an experimental design hypothesis, not proven superior to other graph-based coordination methods.</li><li>Parameters (free-flow speed, saturation flow, jam density, risk coefficients) are typical values, not calibrated against real data.</li><li>Results are simulation evidence for decision support only; they must not be used to control real traffic signals.</li></ul><button onclick="window.print()">Print / Save PDF</button></body></html>
