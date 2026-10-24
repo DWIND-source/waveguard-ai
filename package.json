@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "tsx server/index.ts",
     "build": "vite build",
+    "build:edge": "node scripts/build-edge.mjs",
     "start": "tsx server/index.ts --production",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
@@ -29,6 +30,7 @@
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.7.0",
+    "esbuild": "^0.25.12",
     "jsdom": "^30.1.3",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.15",

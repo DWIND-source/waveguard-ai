@@ -8,7 +8,12 @@ const results: Array<{ name: string; status?: number; elapsedMs?: number; data?:
 async function check(name: string, path: string, body?: unknown) {
   const start = performance.now();
   try {
-    const response = await fetch(`${base}${path}`, body === undefined ? {} : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(120000) });
+    const url = new URL(`${base}${path}`);
+    if (process.env.VERIFY_REGION) url.searchParams.set('forceFunctionRegion', process.env.VERIFY_REGION);
+    const headers: Record<string, string> = {};
+    if (process.env.VERIFY_ORIGIN) headers.Origin = process.env.VERIFY_ORIGIN;
+    if (body !== undefined) headers['Content-Type'] = 'application/json';
+    const response = await fetch(url, { method: body === undefined ? 'GET' : 'POST', headers, body: body === undefined ? undefined : JSON.stringify(body), signal: AbortSignal.timeout(120000) });
     const data = await response.json();
     const result = { name, status: response.status, elapsedMs: Math.round(performance.now() - start), data };
     results.push(result);

@@ -2,6 +2,10 @@ import type { ParsedIncident } from '../shared/incident';
 
 const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
 const offlineDemo = import.meta.env.VITE_STATIC_DEMO === 'true' && !apiBase;
+function apiUrl(path: string): string {
+  const region = import.meta.env.VITE_API_REGION;
+  return apiBase + path + (region ? `?forceFunctionRegion=${encodeURIComponent(region)}` : '');
+}
 
 export interface ApiStatus {
   gemini: boolean;
@@ -33,7 +37,7 @@ async function post<T>(url: string, body: unknown): Promise<T> {
   }
   let res: Response;
   try {
-    res = await fetch(apiBase + url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(90000) });
+    res = await fetch(apiUrl(url), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(90000) });
   } catch {
     throw new ApiError('network', en ? 'Cannot connect to the WaveGuard server.' : 'Không kết nối được tới máy chủ WaveGuard.');
   }
@@ -54,7 +58,7 @@ async function post<T>(url: string, body: unknown): Promise<T> {
 export async function getStatus(): Promise<ApiStatus> {
   if (offlineDemo) return { gemini: false, model: null };
   try {
-    const r = await fetch(apiBase + '/api/status', { signal: AbortSignal.timeout(10000), cache: 'no-store' });
+    const r = await fetch(apiUrl('/api/status'), { signal: AbortSignal.timeout(10000), cache: 'no-store' });
     if (!r.ok) return { gemini: false, model: null };
     return await r.json();
   } catch {

@@ -1,0 +1,42 @@
+{
+  "verifiedAt": "2026-10-24T07:43:50.326Z",
+  "provider": "Supabase Edge Functions",
+  "project": "qirglnmsxynfetvdkthc",
+  "region": "us-east-1",
+  "liveAuditPassed": true,
+  "checks": [
+    {
+      "name": "configuration",
+      "status": 200,
+      "elapsedMs": 768
+    },
+    {
+      "name": "empty input",
+      "status": 400,
+      "elapsedMs": 593
+    },
+    {
+      "name": "English incident",
+      "status": 200,
+      "elapsedMs": 1856
+    },
+    {
+      "name": "Vietnamese incident",
+      "status": 200,
+      "elapsedMs": 1897
+    },
+    {
+      "name": "unsupported instruction",
+      "status": 422,
+      "elapsedMs": 7630
+    },
+    {
+      "name": "grounded explanation",
+      "status": 200,
+      "elapsedMs": 3545
+    }
+  ],
+  "preflight": 204,
+  "unapprovedOrigin": 403,
+  "browserVerification": "Not performed: no connected browser available"
+}

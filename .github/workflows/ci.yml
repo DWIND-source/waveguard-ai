@@ -20,4 +20,6 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
+      - run: npm run build:edge
+      - run: git diff --exit-code -- supabase/functions/waveguard-api/index.js
       - run: npm run build

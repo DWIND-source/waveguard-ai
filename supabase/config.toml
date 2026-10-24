@@ -1,0 +1,7 @@
+project_id = "waveguard-ai"
+
+# Public competition demo API. CORS and per-isolate limits are in the handler.
+# No database access, service-role key, or user data storage is used.
+[functions.waveguard-api]
+verify_jwt = false
+entrypoint = "./functions/waveguard-api/index.js"
